@@ -1,5 +1,5 @@
 # test_ddm
-Shell-script to test the Distict Discriptor Mode in Onionbalance using docker containers
+Shell-script to test the Distict Descriptor Mode in Onionbalance using docker containers
 
 Before running you need to set a few parameters:
 - NUMBER_INSTANCES
