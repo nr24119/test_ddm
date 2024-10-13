@@ -5,6 +5,8 @@
 # Onionbalance Installation Guide: https://onionbalance.readthedocs.io/en/latest/v3/tutorial-v3.html
 # credit goes to https://github.com/lu4p/tor-docker and https://github.com/FriendlyAdmin/onionbalance
 
+# adjust sleep times as needed
+
 # define number of backend instances
 NUMBER_INSTANCES=<insert_here>
 
@@ -236,7 +238,7 @@ HiddenServiceDir /var/lib/tor/hidden_service/
 HiddenServicePort 80 127.0.0.1:80
 HiddenServiceOnionbalanceInstance 1' > $HOST_DIR/instance$i/torrc.default
 
-	# copy updated torrc and ob_config to backend instances (overwriting existing torrc used for initial tor start up)
+	# copy updated torrc and ob_config to backend instances (overwriting the existing torrc used for initial tor start up)
 	docker cp $HOST_DIR/instance$i/torrc.default backend$i:/etc/tor/torrc.default
 	echo 'MasterOnionAddress '$MASTER_ONION'' > $HOST_DIR/instance$i/ob_config
 	docker cp $HOST_DIR/instance$i/ob_config backend$i:/var/lib/tor/hidden_service/ob_config
@@ -305,7 +307,7 @@ Log debug file /var/log/tor/debug.log
 RunAsDaemon 1
 DataDirectory /var/lib/tor' > $HOST_DIR/clients/torrc.default
 
-# for clients only one image is needed since they are extactly the same
+# for clients only one image is needed since they are exactly the same
 docker build --no-cache -t torclient $HOST_DIR/clients
 
 i=1
@@ -330,7 +332,7 @@ done
 
 # ----------------------------------------------------------------------------------
 # repeat curl-Requests to get a wider sample of which backend instances were contacted
-# for this every client needs to be restarted so that they get a new descriptor
+# every client needs to be restarted so that they get a new descriptor
 REPEAT=120
 
 for i in `seq 1 $REPEAT`
